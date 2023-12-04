@@ -1,111 +1,65 @@
-# task-4
-completed 
-Task 4 
- 
-1 question 
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+import java.util.concurrent.TimeUnit;
 
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+public class SnapdealLoginAutomation {
 
-public class StringListConversion {
     public static void main(String[] args) {
-        Stream<String> names = Stream.of("aBc", "d", "ef");
-        List<String> upperCaseNames = names.map(String::toUpperCase)
-                                          .collect(Collectors.toList());
-        System.out.println(upperCaseNames);
+        // Set the path to the chromedriver executable
+        System.setProperty("webdriver.chrome.driver", "path/to/chromedriver");
+
+        // Create a Chrome browser instance
+        WebDriver driver = new ChromeDriver();
+
+        // Maximize the browser window
+        driver.manage().window().maximize();
+
+        // Navigate to Snapdeal website
+        driver.get("https://www.snapdeal.com/");
+
+        // Wait for elements to load
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+
+        // Locate and hover over the Sign In button
+        WebElement signInButton = driver.findElement(By.className("accountInner"));
+        Actions actions = new Actions(driver);
+        actions.moveToElement(signInButton).build().perform();
+
+        // Click on the Sign In button
+        signInButton.click();
+
+        // Enter a valid Email Id
+        WebElement emailField = driver.findElement(By.id("userName"));
+        emailField.sendKeys("your_dummy_email@example.com");
+
+        // Click on the Continue button
+        WebElement continueButton = driver.findElement(By.id("checkUser"));
+        continueButton.click();
+
+        // Enter a valid password
+        WebElement passwordField = driver.findElement(By.id("j_password_login_uc"));
+        passwordField.sendKeys("your_dummy_password");
+
+        // Click on the Login button
+        WebElement loginButton = driver.findElement(By.id("submitLoginUC"));
+        loginButton.click();
+
+        // Wait for the user to be logged in (you may need to adjust this wait time)
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+
+        // Verify that the user is logged in successfully
+        if (driver.getTitle().contains("My Account")) {
+            System.out.println("Login successful. Verification message: User is logged in.");
+        } else {
+            System.out.println("Login failed. Verification message: User is not logged in.");
+        }
+
+        // Close the browser
+        driver.quit();
     }
 }
 
-
-OUTPUT
-[ABC, D, EF]
-______________________________________________________________________________________________________________________________________________________________________________________________________________________
-
-QUESTION 2
-
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
-public class NonEmptyStringList {
-    public static void main(String[] args) {
-        List<String> strings = Arrays.asList("abc", "bc", "efg", "abcd", "", "jkl");
-        
-        List<String> nonEmptyStrings = strings.stream()
-                                              .filter(s -> !s.isEmpty())
-                                              .collect(Collectors.toList());
-        
-        System.out.println("Non-empty strings: " + nonEmptyStrings);
-    }
-}
-
-
-OUTPUT
-
-Non-empty strings: [abc, bc, efg, abcd, jkl]
-
-______________________________________________________________________________________________________________________________________________________________________________________________________________________
- QUESTION 3
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
-public class SpecialGifts {
-    public static void main(String[] args) {
-        List<String> studentNames = Arrays.asList("Alice", "Bob", "Anna", "Alex", "David", "Amy", "Andrew", "Adam", "John", "Amanda");
-        
-        List<String> studentsWithAGift = studentNames.stream()
-                                                     .filter(name -> name.startsWith("A"))
-                                                     .collect(Collectors.toList());
-        
-        System.out.println("Students with names starting with 'A': " + studentsWithAGift);
-    }
-}
-
-
-Output 
-
-
-Students with names starting with 'A': [Alice, Anna, Alex, Amy, Andrew, Adam, Amanda]
-______________________________________________________________________________________________________________________________________________________________________________________________________________________
-
-Question4
-
-
-import java.time.LocalDate;
-import java.time.Period;
-import java.util.Scanner;
-
-public class AgeCalculator {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        
-        System.out.print("Enter your birthdate (yyyy-mm-dd): ");
-        String input = scanner.next();
-        
-        LocalDate birthdate = LocalDate.parse(input);
-        LocalDate currentDate = LocalDate.now();
-        
-        Period period = Period.between(birthdate, currentDate);
-        
-        int years = period.getYears();
-        int months = period.getMonths();
-        int days = period.getDays();
-        
-        System.out.println("Your age is: " + years + " years, " + months + " months, and " + days + " days.");
-        
-        scanner.close();
-    }
-}
-
-
-Output
-
-
-Enter your birthdate (yyyy-mm-dd): 2002-07-11
-Your age is: 21 years, 3 months, and 29 days.
-______________________________________________________________________________________________________________________________________________________________________________________________________________________
-
+     
